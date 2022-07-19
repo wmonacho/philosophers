@@ -11,6 +11,10 @@ OBJS_DIR = .objs
 OBJ =	$(addprefix $(OBJS_DIR)/, $(FILES:.c=.o))
 
 FILES = philosophers.c									\
+		init.c											\
+		parsing.c										\
+		ft_atoi.c										\
+		ft_putstr_fd.c									\
 
 all: $(NAME)
 
