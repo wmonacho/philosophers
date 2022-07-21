@@ -7,10 +7,23 @@ int	main(int argc, char **argv)
 	philo = malloc(sizeof(t_grp));
 	if (philo == NULL)
 		return (1);
-	init_variable(philo);
 	parsing(philo, argv, argc);
-	argc += 0;
-	argv += 0;
-	philo += 0;
+	simulation(philo);
+	philo->time = ft_gettime();
 	return (0);
+}
+
+unsigned long long	ft_gettime(void)
+{
+	struct timeval		time;
+	unsigned long long	ms;
+
+	gettimeofday(&time, NULL);
+	ms = (time.tv_sec * 1000000) + (time.tv_usec);
+	printf("time = %lld microsecond\n", ms);
+	return (ms);
+}
+
+void	simulation(t_grp *philo)
+{
 }

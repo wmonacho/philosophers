@@ -2,5 +2,6 @@
 
 void	init_variable(t_grp *philo)
 {
-	philo = NULL;
+	philo += 0;
+	// philo = NULL;
 }
