@@ -1,7 +1,6 @@
 #include "philosophers.h"
 
-void	init_variable(t_grp *philo)
+void	init_variable(t_param *param)
 {
-	philo += 0;
-	// philo = NULL;
+	param = NULL;
 }

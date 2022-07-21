@@ -1,9 +1,9 @@
 #include "philosophers.h"
 
-int	exit_strerror(t_grp *philo, char *str)
+int	exit_strerror(t_param *param, char *str)
 {
-	ft_pustr_fd(str, 0);
-	free(philo);
+	ft_putstr_fd(str, 0);
+	free(param);
 	exit(0);
 	return (0);
 }

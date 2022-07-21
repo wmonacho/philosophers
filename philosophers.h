@@ -6,26 +6,38 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
+# include <string.h>
+# include <pthread.h>
 
-typedef struct s_grp
+typedef struct s_philo
 {
-	int			number_of_philosophers;
-	int			time_to_die;
-	int			time_to_eat;
-	int			time_to_sleep;
-	unsigned long long	all_ate;
-	unsigned long long	dieded;
-	unsigned long long	number_of_times_each_philosophers_must_eat;
-	unsigned long long	time;
-}				t_grp;
+	int				ate;
+	pthread_t		id;
+	struct s_param	*param;
 
-void				init_variable(t_grp *philo);
+}				t_philo;
+typedef struct s_param
+{
+	int					number_of_philosophers;
+	int					time_to_die;
+	int					time_to_eat;
+	int					time_to_sleep;
+	int					all_ate;
+	int					dieded;
+	int					number_of_times_each_philosophers_must_eat;
+	unsigned long long	time;
+	pthread_mutex_t		mutex_check;
+	t_philo				philo[400];
+}				t_param;
+
+void				init_variable(t_param *param);
 int					ft_atoi(const char *str);
 int					main(int argc, char **argv);
-int					parsing(t_grp *philo, char **argv, int argc);
-int					check(int argc, t_grp *philo);
+int					parsing(t_param *param, char **argv, int argc);
+int					check(int argc, t_param *param);
 void				ft_putstr_fd(char *s, int fd);
-unsigned long long	ft_gettime(void);
-int					exit_strerror(t_grp *philo, char *str);
-void				simulation(t_grp *philo);
+unsigned long long	gettime(void);
+int					exit_strerror(t_param *param, char *str);
+void				simulation(t_param *param);
+void				*threadrout(void *arg);
 #endif
