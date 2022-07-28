@@ -13,9 +13,13 @@ typedef struct s_philo
 {
 	int				ate;
 	pthread_t		id;
+	int				id_philo;
+	int				fork;
+	pthread_mutex_t	check_fork;
 	struct s_param	*param;
 
 }				t_philo;
+
 typedef struct s_param
 {
 	int					number_of_philosophers;
@@ -27,7 +31,7 @@ typedef struct s_param
 	int					number_of_times_each_philosophers_must_eat;
 	unsigned long long	time;
 	pthread_mutex_t		mutex_check;
-	t_philo				philo[400];
+	t_philo				*philo;
 }				t_param;
 
 void				init_variable(t_param *param);

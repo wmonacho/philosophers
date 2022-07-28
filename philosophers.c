@@ -42,8 +42,24 @@ void	check_if_philo_dieded(t_param *param)
 	last_time = param->time;
 	gettime();
 	if (last_time - param->time > philo->time_)
+	{
 
-check si le temps du debut certins sont dead ou non
+	}
+}
+
+void	threadrout(void	*arg)
+{
+	t_philo	*phi;
+
+	phi = arg;
+	if ((phi->id_philo % 2) != 1)
+		ft_usleep(phi->param->time_to_eat);
+	while (1);
+	{
+		ft_eat();
+		ft_sleep();
+		ft_think();
+	}
 }
 
 void	simulation(t_param *param)
@@ -54,10 +70,6 @@ void	simulation(t_param *param)
 	i = -1;
 	phi = param->philo;
 	while (++i < param->number_of_philosophers)
-	{
-		pthread_mutex_lock(&(param->mutex_check));
 		pthread_create(&(phi[i].id), NULL, &threadrout, &(phi[i]));
-		pthread_mutex_unlock(&(param->mutex_check));
-	}
 	check_if_philo_dieded(param);
 }
