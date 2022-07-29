@@ -10,7 +10,6 @@ int	main(int argc, char **argv)
 	param->time = gettime();
 	parsing(param, argv, argc);
 	simulation(param);
-	param->time = gettime();
 	return (0);
 }
 
@@ -38,12 +37,16 @@ void	*threadrout(void *arg)
 void	check_if_philo_dieded(t_param *param)
 {
 	unsigned long long	last_time;
+	int	i;
 
-	last_time = param->time;
-	gettime();
-	if (last_time - param->time > philo->time_)
+	i = -1;
+	param->time = gettime();
+	while (++i < param->nbr_philos)
+	{
 
-check si le temps du debut certins sont dead ou non
+	}
+	
+
 }
 
 void	simulation(t_param *param)

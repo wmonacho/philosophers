@@ -11,14 +11,15 @@
 
 typedef struct s_philo
 {
-	int				ate;
-	pthread_t		id;
-	struct s_param	*param;
+	int					ate;
+	pthread_t			id;
+	unsigned long long	time_last_eat;
+	struct s_param		*param;
 
 }				t_philo;
 typedef struct s_param
 {
-	int					number_of_philosophers;
+	int					nbr_philos;
 	int					time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;
