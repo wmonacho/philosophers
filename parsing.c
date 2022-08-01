@@ -4,7 +4,7 @@ int	parsing(t_param *param, char **argv, int argc)
 {
 	int	i;
 
-	i = -1;
+	i = 0;
 	if (check(argc, param) == 0)
 		return (0);
 	param->nbr_philos = ft_atoi(argv[1]);
@@ -14,7 +14,19 @@ int	parsing(t_param *param, char **argv, int argc)
 	while (++i < param->nbr_philos)
 		param->philo[i].time_last_eat = param->time;
 	if (argc == 6)
-		param->number_of_times_each_philosophers_must_eat = ft_atoi(argv[5]);
+		param->nbr_of_times_each_philos_must_eat = ft_atoi(argv[5]);
+	param->philo = malloc(sizeof(t_philo)
+			* (param->nbr_philos + 1));
+	if (param->philo == NULL)
+		return (0);
+	param->philo[param->nbr_philos] = NULL;
+	while (i < param->nbr_philos)
+	{
+		param->philo[i].param = param;
+		param->philo[i].id_philo = i + 1;
+		i++;
+	}
+	param->philo->fork = 1;
 	return (1);
 }
 
