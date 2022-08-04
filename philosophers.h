@@ -18,8 +18,9 @@ typedef struct s_philo
 	unsigned long long	time_last_eat;
 	pthread_mutex_t		check_fork;
 	pthread_mutex_t		print_message;
-	int					message;
+	pthread_mutex_t		check_die;
 	struct s_param		*param;
+	int					dieded;
 }				t_philo;
 
 typedef struct s_param
@@ -29,7 +30,6 @@ typedef struct s_param
 	int					time_to_eat;
 	int					time_to_sleep;
 	int					all_ate;
-	int					dieded;
 	int					nbr_of_times_each_philos_must_eat;
 	unsigned long long	time;
 	pthread_mutex_t		mutex_check;
@@ -46,4 +46,5 @@ unsigned long long	gettime(void);
 int					exit_strerror(t_param *param, char *str);
 void				simulation(t_param *param);
 void				*threadrout(void *arg);
+void				print_event(t_philo *philo, char *message);
 #endif
