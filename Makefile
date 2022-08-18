@@ -16,6 +16,7 @@ FILES = philosophers.c									\
 		ft_atoi.c										\
 		ft_putstr_fd.c									\
 		free.c											\
+		routine.c										\
 
 all: $(NAME)
 

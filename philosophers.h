@@ -49,4 +49,5 @@ void				*threadrout(void *arg);
 void				print_event(t_param *param, char *message);
 void				ft_usleep(int time);
 int					init_mutex(t_param *param);
+void				ft_eat(t_philo	*philo);
 #endif
