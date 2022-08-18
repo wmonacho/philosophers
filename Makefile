@@ -20,7 +20,7 @@ FILES = philosophers.c									\
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(SFLAG) $(OBJ) -o $(NAME)
+	$(CC) $(SFLAG) -pthread $(OBJ) -o $(NAME)
 	
 $(OBJS_DIR)/%.o:		%.c philosophers.h Makefile | $(OBJS_DIR)
 				${CC} ${CFLAGS} -c $< -o $@
