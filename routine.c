@@ -24,6 +24,12 @@ int	ft_eat(t_philo	*philo)
 			break;
 		}
 	}
+	take_a_meal(philo);
+	return (1);
+}
+
+void	take_a_meal(t_philo *philo)
+{
 	pthread_mutex_lock(&philo->check_last_eat);
 	philo[philo->id_philo].time_last_eat = gettime();
 	pthread_mutex_unlock(&philo->check_last_eat);
@@ -38,7 +44,6 @@ int	ft_eat(t_philo	*philo)
 	pthread_mutex_lock(&philo->check_fork);
 	philo->param->philo[philo->id_philo - 1].fork = 1;
 	pthread_mutex_unlock(&philo->check_fork);
-	return (1);
 }
 
 void	ft_think(t_philo *philo)

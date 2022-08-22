@@ -58,4 +58,5 @@ int					init_mutex(t_param *param);
 int					ft_eat(t_philo	*philo);
 int					param_init(t_param *param, char **argv, int argc);
 int					philo_init(t_param *param, int i);
+void				take_a_meal(t_philo *philo);
 #endif

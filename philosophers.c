@@ -46,7 +46,7 @@ changer les forks comme leonard pour eviter que les philos communiquent 1/4
 destroy les mutex 0/4
 faire attention au premier philo 2/4
 faire attention s'il n'y a que 1 philo 0/4
-normer les fonctions 2/4
+normer les fonctions 2.5/4
 
 
 faire les fonctions free (basic)
