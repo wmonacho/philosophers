@@ -17,6 +17,8 @@ FILES = philosophers.c									\
 		ft_putstr_fd.c									\
 		free.c											\
 		routine.c										\
+		check.c											\
+		utils.c											\
 
 all: $(NAME)
 

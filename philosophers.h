@@ -14,10 +14,14 @@ typedef struct s_philo
 	int					ate;
 	pthread_t			id;
 	int					id_philo;
-	int					fork;
+	int					*fork;
+	int					lfork;
+	int					rfork;
 	unsigned long long	time_last_eat;
 	pthread_mutex_t		check_fork;
+	pthread_mutex_t		check_last_eat;
 	pthread_mutex_t		check_meal;
+	int					meal;
 	struct s_param		*param;
 }				t_philo;
 
@@ -29,7 +33,7 @@ typedef struct s_param
 	int					time_to_eat;
 	int					time_to_sleep;
 	int					all_ate;
-	int					nbr_of_times_each_philos_must_eat;
+	int					nbr_of_meal;
 	unsigned long long	time;
 	unsigned long long	start_time;
 	pthread_mutex_t		mutex_check;
@@ -52,4 +56,6 @@ void				print_event(t_param *param, char *message, int id);
 void				ft_usleep(int time);
 int					init_mutex(t_param *param);
 int					ft_eat(t_philo	*philo);
+int					param_init(t_param *param, char **argv, int argc);
+int					philo_init(t_param *param, int i);
 #endif
