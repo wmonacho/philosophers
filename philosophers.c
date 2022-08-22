@@ -8,6 +8,7 @@ int	main(int argc, char **argv)
 	param = malloc(sizeof(t_param));
 	if (param == NULL)
 		return (1);
+	param->start_time = gettime();
 	param->time = gettime();
 	parsing(param, argv, argc);
 	simulation(param);
@@ -27,34 +28,37 @@ unsigned long long	gettime(void)
 
 	gettimeofday(&time, NULL);
 	ms = (time.tv_sec * 1000000) + (time.tv_usec);
-	printf("time = %lld microsecond\n", ms);
+	// printf("time = %lld microsecond\n", ms);
 	return (ms);
 }
 
 int	check_diff(unsigned long long last_eat)
 {
+	// printf("test_getdif\n");
 	return (gettime() - last_eat);
 }
 
-void	check_if_philo_dieded(t_param *param)
+int	check_if_philo_dieded(t_param *param)
 {
 	int	i;
 
-	i = -1;
 	while (1)
 	{
+		i = -1;
 		while (++i < param->nbr_philos)
 		{
+			// printf("timelasteat=%lli\n", param->philo[i].time_last_eat);
 			if (check_diff(param->philo[i].time_last_eat) > param->time_to_die)
 			{
-				print_event(param, "died");
+				print_event(param, "died", param->philo[i].id_philo);
 				pthread_mutex_lock(&param->check_die);
 				param->dieded = 1;
 				pthread_mutex_unlock(&param->check_die);
-				break;
-
+				return (1);
 			}
 		}
+
+		// printf("test_die\n");
 		usleep(500);
 	}
 }
@@ -66,6 +70,7 @@ void	ft_usleep(int time)
 
 	i = 0;
 	start_time = gettime();
+	usleep((time / 100) * 95);
 	while (i)
 	{
 		if (check_diff(start_time) > time)
@@ -86,11 +91,11 @@ void	simulation(t_param *param)
 	check_if_philo_dieded(param);
 }
 
-void	print_event(t_param *param, char *message)
+void	print_event(t_param *param, char *message, int id)
 {
 	pthread_mutex_lock(&param->check_die);
 	if (param->dieded == 0)
-		printf("%lli %i %s\n", gettime() / 1000, param->philo->id_philo, message);
+		printf("%lli %i %s\n", ((gettime() - param->start_time) / 1000), id, message);
 	pthread_mutex_unlock(&param->check_die);
 }
 
