@@ -1,23 +1,40 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/23 14:03:33 by wmonacho          #+#    #+#             */
+/*   Updated: 2022/08/23 14:58:27 by wmonacho         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosophers.h"
 
 int	parsing(t_param *param, char **argv, int argc)
 {
 	int	i;
 
-	i = 0;
 	if (check(argc, param) == 0)
-		return (0);
+		exit_strerror(param, "malloc");
 	param_init(param, argv, argc);
-	param->philo->fork = malloc(sizeof(int) * (param->nbr_philos));
-	i = -1;
-	while (++i < param->nbr_philos)
-		param->philo->fork[i] = 1;
-	i = -1;
 	init_mutex(param);
+	param->philo->forks = malloc(sizeof(pthread_mutex_t) * (param->nbr_philos));
+	if (param->philo->forks == NULL)
+		exit_strerror(param, "malloc");
+	i = -1;
 	while (++i < param->nbr_philos)
 	{
-		philo_init(param, i);
+		if (pthread_mutex_init(&param->philo->forks[i], NULL) != 0)
+		{
+			exit_strerror(param, "mutex");
+			return (1);
+		}
 	}
+	i = -1;
+	while (++i < param->nbr_philos)
+		philo_init(param, i);
 	param->dieded = 0;
 	return (1);
 }
@@ -32,34 +49,35 @@ int	param_init(t_param *param, char **argv, int argc)
 			* (param->nbr_philos + 1));
 	param->all_ate = 0;
 	if (param->philo == NULL)
-		return (0);
+		exit_strerror(param, "malloc");
 	if (argc == 6)
 		param->nbr_of_meal = ft_atoi(argv[5]);
 	else
 	{
 		param->nbr_of_meal = -1;
 	}
+	return (1);
 }
 
 int	philo_init(t_param *param, int i)
 {
 	if (i == 0)
 	{
-		param->philo[i].lfork = &param->philo->fork[param->nbr_philos - 1];
-		param->philo[i].rfork = &param->philo->fork[i];
+		param->philo[i].lfork = &param->philo->forks[param->nbr_philos - 1];
+		param->philo[i].rfork = &param->philo->forks[0];
 	}
 	else
 	{
-		param->philo[i].lfork = &param->philo->fork[i - 1];
-		param->philo[i].rfork = &param->philo->fork[i];
+		param->philo[i].lfork = &param->philo->forks[i - 1];
+		param->philo[i].rfork = &param->philo->forks[i];
 	}
 	param->philo[i].time_last_eat = gettime();
 	param->philo[i].param = param;
 	param->philo[i].id_philo = i + 1;
 	param->philo[i].meal = 0;
-	pthread_mutex_init(&param->philo[i].check_fork, NULL);
 	pthread_mutex_init(&param->philo[i].check_last_eat, NULL);
 	pthread_mutex_init(&param->philo[i].check_meal, NULL);
+	return (1);
 }
 
 int	init_mutex(t_param *param)
@@ -77,3 +95,6 @@ int	check(int argc, t_param *param)
 		return (exit_strerror(param, "Wrong amount of arguments\n"));
 	return (1);
 }
+
+/*
+*/

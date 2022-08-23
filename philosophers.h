@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philosophers.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/23 14:02:59 by wmonacho          #+#    #+#             */
+/*   Updated: 2022/08/23 14:54:14 by wmonacho         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
@@ -14,13 +25,12 @@ typedef struct s_philo
 	int					ate;
 	pthread_t			id;
 	int					id_philo;
-	int					*fork;
-	int					lfork;
-	int					rfork;
 	unsigned long long	time_last_eat;
-	pthread_mutex_t		check_fork;
 	pthread_mutex_t		check_last_eat;
 	pthread_mutex_t		check_meal;
+	pthread_mutex_t		*forks;
+	pthread_mutex_t		*lfork;
+	pthread_mutex_t		*rfork;
 	int					meal;
 	struct s_param		*param;
 }				t_philo;
@@ -59,4 +69,11 @@ int					ft_eat(t_philo	*philo);
 int					param_init(t_param *param, char **argv, int argc);
 int					philo_init(t_param *param, int i);
 void				take_a_meal(t_philo *philo);
+int					check_die(t_philo *philo);
+int					check_if_philo_dieded(t_param *param);
+int					check_last_eat(t_param *param, int i);
+int					check_fork(t_philo *philo);
+int					check_diff(unsigned long long last_eat);
+int					join_and_destroy_thread(t_param *param);
+int					destroy_mutex(t_param *param, pthread_mutex_t *mutex);
 #endif
