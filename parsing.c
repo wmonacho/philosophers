@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 14:03:33 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/08/23 14:58:27 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/08/24 11:22:34 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	parsing(t_param *param, char **argv, int argc)
 	int	i;
 
 	if (check(argc, param) == 0)
-		exit_strerror(param, "malloc");
+		exit_parse(param, "malloc");
 	param_init(param, argv, argc);
 	init_mutex(param);
 	param->philo->forks = malloc(sizeof(pthread_mutex_t) * (param->nbr_philos));
@@ -25,13 +25,8 @@ int	parsing(t_param *param, char **argv, int argc)
 		exit_strerror(param, "malloc");
 	i = -1;
 	while (++i < param->nbr_philos)
-	{
 		if (pthread_mutex_init(&param->philo->forks[i], NULL) != 0)
-		{
-			exit_strerror(param, "mutex");
-			return (1);
-		}
-	}
+			exit_destroy_forks(param, "mutex forks", i);
 	i = -1;
 	while (++i < param->nbr_philos)
 		philo_init(param, i);
@@ -75,8 +70,10 @@ int	philo_init(t_param *param, int i)
 	param->philo[i].param = param;
 	param->philo[i].id_philo = i + 1;
 	param->philo[i].meal = 0;
-	pthread_mutex_init(&param->philo[i].check_last_eat, NULL);
-	pthread_mutex_init(&param->philo[i].check_meal, NULL);
+	if (pthread_mutex_init(&param->philo[i].check_last_eat, NULL) != 0)
+		exit_destroy_last_eat(param, "mutex forks", i);
+	if (pthread_mutex_init(&param->philo[i].check_meal, NULL) != 0)
+		exit_destroy_meal(param, "mutex forks", i);
 	return (1);
 }
 
@@ -92,9 +89,6 @@ int	check(int argc, t_param *param)
 {
 	init_variable(param);
 	if (argc != 5 && argc != 6)
-		return (exit_strerror(param, "Wrong amount of arguments\n"));
+		return (exit_parse(param, "Wrong amount of arguments\n"));
 	return (1);
 }
-
-/*
-*/

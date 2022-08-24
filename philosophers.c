@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 14:03:13 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/08/23 15:13:58 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/08/24 14:42:30 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ destroy les mutex 4/4 OK
 faire les fonctions free (basic) 4/4 OK
 
 finir le programme sans erreurs 4/4 OK
-trouver un bon resultat 4/4
-regarder les petits cas a part (si un seul philo etc) 4/4
-corriger et debugger les segfault 4/4
+regarder les petits cas a part (si un seul philo etc) 4/4 OK
+corriger et debugger les segfault 4/4 OK
+
+faire des fonctions de destroy specifique de mutex 1/4
 */

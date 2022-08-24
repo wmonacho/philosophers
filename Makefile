@@ -6,7 +6,7 @@
 #    By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/23 14:03:24 by wmonacho          #+#    #+#              #
-#    Updated: 2022/08/23 14:03:24 by wmonacho         ###   ########lyon.fr    #
+#    Updated: 2022/08/24 13:28:46 by wmonacho         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ FILES = philosophers.c									\
 		routine.c										\
 		check.c											\
 		utils.c											\
+		destroy.c										\
 
 all: $(NAME)
 

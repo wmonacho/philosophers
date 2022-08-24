@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 14:03:17 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/08/23 14:03:17 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/08/24 13:43:07 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	ft_eat(t_philo	*philo)
 			return (0);
 		if (check_fork(philo) == 1)
 			break ;
+		else
+			return (0);
 	}
 	take_a_meal(philo);
 	return (1);
