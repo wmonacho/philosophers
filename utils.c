@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/23 14:03:21 by wmonacho          #+#    #+#             */
+/*   Updated: 2022/08/23 14:03:21 by wmonacho         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosophers.h"
 
 void	ft_usleep(int time)
@@ -11,7 +23,7 @@ void	ft_usleep(int time)
 	while (i)
 	{
 		if (check_diff(start_time) > time)
-			break;
+			break ;
 	}
 }
 
