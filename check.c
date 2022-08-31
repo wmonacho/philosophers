@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: will <will@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 14:03:29 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/08/24 14:45:08 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/08/31 16:34:29 by will             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ int	check_if_philo_dieded(t_param *param)
 {
 	int	i;
 
+	pthread_mutex_lock(&param->philo->check_meal);
+	param->all_ate = 0;
+	pthread_mutex_unlock(&param->philo->check_meal);
 	while (1)
 	{
 		i = -1;
@@ -29,9 +32,6 @@ int	check_if_philo_dieded(t_param *param)
 			if (check_last_eat(param, i) == 0)
 				return (0);
 		}
-		pthread_mutex_lock(&param->philo->check_meal);
-		param->all_ate = 0;
-		pthread_mutex_unlock(&param->philo->check_meal);
 		usleep(500);
 	}
 	return (1);
@@ -49,7 +49,9 @@ int	check_last_eat(t_param *param, int i)
 	}
 	pthread_mutex_lock(&param->philo->check_meal);
 	if (param->philo[i].meal == param->nbr_of_meal)
+	{
 		param->all_ate++;
+	}
 	pthread_mutex_unlock(&param->philo->check_meal);
 	if (param->all_ate == param->nbr_philos)
 	{

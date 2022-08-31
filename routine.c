@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: will <will@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 14:03:17 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/08/24 13:43:07 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/08/31 16:34:13 by will             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	take_a_meal(t_philo *philo)
 	pthread_mutex_lock(&philo->check_last_eat);
 	philo->time_last_eat = gettime();
 	pthread_mutex_unlock(&philo->check_last_eat);
-	pthread_mutex_lock(&philo->check_meal);
+	pthread_mutex_lock(&philo->check_meal);;
 	philo->meal++;
 	pthread_mutex_unlock(&philo->check_meal);
 }

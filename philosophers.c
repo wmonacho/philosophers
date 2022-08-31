@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: will <will@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 14:03:13 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/08/24 14:42:30 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/08/31 14:13:05 by will             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char **argv)
 	parsing(param, argv, argc);
 	simulation(param);
 	join_and_destroy_thread(param);
-	exit_strerror(param, "END");
+	exit_strerror(param, "END\n");
 	return (0);
 }
 
