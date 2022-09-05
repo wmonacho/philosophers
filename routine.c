@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: will <will@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 14:03:17 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/08/31 16:34:13 by will             ###   ########lyon.fr   */
+/*   Updated: 2022/09/05 18:40:01 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,15 @@ int	ft_eat(t_philo	*philo)
 	{
 		if (check_die(philo) == 0)
 			return (0);
-		if (check_fork(philo) == 1)
+		if (check_lfork(philo) == 1)
 			break ;
-		else
+	}
+	while (1)
+	{
+		if (check_die(philo) == 0)
 			return (0);
+		if (check_rfork(philo) == 1)
+			break ;
 	}
 	take_a_meal(philo);
 	return (1);
@@ -34,9 +39,33 @@ void	take_a_meal(t_philo *philo)
 	pthread_mutex_lock(&philo->check_last_eat);
 	philo->time_last_eat = gettime();
 	pthread_mutex_unlock(&philo->check_last_eat);
-	pthread_mutex_lock(&philo->check_meal);;
+	pthread_mutex_lock(&philo->check_meal);
 	philo->meal++;
 	pthread_mutex_unlock(&philo->check_meal);
+	reset_fork(philo);
+}
+
+void	reset_fork(t_philo *philo)
+{
+	if (philo->id_philo != 1)
+	{
+		pthread_mutex_lock(&philo->param
+			->philo[philo->param->nbr_philos].check_forks);
+		philo->param->philo[philo->id_philo].fork = 1;
+		pthread_mutex_unlock(&philo->param
+			->philo[philo->param->nbr_philos].check_forks);
+	}
+	else
+	{
+		pthread_mutex_lock(&philo->param
+			->philo[philo->param->nbr_philos].check_forks);
+		philo->param->philo[philo->param->nbr_philos].fork = 1;
+		pthread_mutex_unlock(&philo->param
+			->philo[philo->param->nbr_philos].check_forks);
+	}
+	pthread_mutex_lock(&philo->check_forks);
+	philo->fork = 1;
+	pthread_mutex_unlock(&philo->check_forks);
 }
 
 void	ft_think(t_philo *philo)

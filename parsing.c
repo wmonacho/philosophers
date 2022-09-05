@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 14:03:33 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/08/24 11:22:34 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/09/05 18:41:21 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,6 @@ int	parsing(t_param *param, char **argv, int argc)
 		exit_parse(param, "malloc");
 	param_init(param, argv, argc);
 	init_mutex(param);
-	param->philo->forks = malloc(sizeof(pthread_mutex_t) * (param->nbr_philos));
-	if (param->philo->forks == NULL)
-		exit_strerror(param, "malloc");
-	i = -1;
-	while (++i < param->nbr_philos)
-		if (pthread_mutex_init(&param->philo->forks[i], NULL) != 0)
-			exit_destroy_forks(param, "mutex forks", i);
 	i = -1;
 	while (++i < param->nbr_philos)
 		philo_init(param, i);
@@ -56,23 +49,16 @@ int	param_init(t_param *param, char **argv, int argc)
 
 int	philo_init(t_param *param, int i)
 {
-	if (i == 0)
-	{
-		param->philo[i].lfork = &param->philo->forks[param->nbr_philos - 1];
-		param->philo[i].rfork = &param->philo->forks[0];
-	}
-	else
-	{
-		param->philo[i].lfork = &param->philo->forks[i - 1];
-		param->philo[i].rfork = &param->philo->forks[i];
-	}
 	param->philo[i].time_last_eat = gettime();
 	param->philo[i].param = param;
 	param->philo[i].id_philo = i + 1;
 	param->philo[i].meal = 0;
+	param->philo[i].fork = 1;
 	if (pthread_mutex_init(&param->philo[i].check_last_eat, NULL) != 0)
 		exit_destroy_last_eat(param, "mutex forks", i);
 	if (pthread_mutex_init(&param->philo[i].check_meal, NULL) != 0)
+		exit_destroy_meal(param, "mutex forks", i);
+	if (pthread_mutex_init(&param->philo[i].check_forks, NULL) != 0)
 		exit_destroy_meal(param, "mutex forks", i);
 	return (1);
 }

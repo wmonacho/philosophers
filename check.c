@@ -3,34 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: will <will@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 14:03:29 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/08/31 16:34:29 by will             ###   ########lyon.fr   */
+/*   Updated: 2022/09/05 18:43:53 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	check_diff(unsigned long long last_eat)
-{
-	return (gettime() - last_eat);
-}
-
 int	check_if_philo_dieded(t_param *param)
 {
 	int	i;
 
-	pthread_mutex_lock(&param->philo->check_meal);
-	param->all_ate = 0;
-	pthread_mutex_unlock(&param->philo->check_meal);
 	while (1)
 	{
 		i = -1;
+		param->all_ate = 1;
 		while (++i < param->nbr_philos)
 		{
 			if (check_last_eat(param, i) == 0)
 				return (0);
+		}
+		if (param->all_ate == 1)
+		{
+			pthread_mutex_lock(&param->check_die);
+			param->dieded = 1;
+			pthread_mutex_unlock(&param->check_die);
+			return (0);
 		}
 		usleep(500);
 	}
@@ -48,30 +48,66 @@ int	check_last_eat(t_param *param, int i)
 		return (0);
 	}
 	pthread_mutex_lock(&param->philo->check_meal);
-	if (param->philo[i].meal == param->nbr_of_meal)
-	{
-		param->all_ate++;
-	}
+	if (param->philo[i].meal < param->nbr_of_meal || param->nbr_of_meal == -1)
+		param->all_ate = 0;
 	pthread_mutex_unlock(&param->philo->check_meal);
-	if (param->all_ate == param->nbr_philos)
-	{
-		pthread_mutex_lock(&param->check_die);
-		param->dieded = 1;
-		pthread_mutex_unlock(&param->check_die);
-		return (0);
-	}
 	return (1);
 }
 
-int	check_fork(t_philo *philo)
+int	check_rfork(t_philo *philo)
 {
-	pthread_mutex_lock(philo->lfork);
-	print_event(philo->param, "has taken a fork", philo->id_philo);
-	pthread_mutex_lock(philo->rfork);
-	print_event(philo->param, "has taken a fork", philo->id_philo);
-	pthread_mutex_unlock(philo->lfork);
-	pthread_mutex_unlock(philo->rfork);
-	return (1);
+	if (philo->id_philo != 1)
+	{
+		pthread_mutex_lock(&philo->param
+			->philo[philo->id_philo - 1].check_forks);
+		if (philo->param->philo[philo->id_philo - 1].fork == 1)
+		{
+			philo->param->philo[philo->id_philo - 1].fork = 0;
+			pthread_mutex_unlock(&philo->param
+				->philo[philo->id_philo - 1].check_forks);
+			print_event(philo->param, "he token a fork", philo->id_philo);
+			return (1);
+		}
+		pthread_mutex_unlock(&philo->param
+			->philo[philo->id_philo - 1].check_forks);
+	}
+	else
+	{
+		if (check_rfork_first(philo) == 1)
+			return (1);
+	}
+	return (0);
+}
+
+int	check_rfork_first(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->param
+		->philo[philo->param->nbr_philos - 1].check_forks);
+	if (philo->param->philo[philo->param->nbr_philos - 1].fork == 1)
+	{
+		philo->param->philo[philo->param->nbr_philos - 1].fork = 0;
+		pthread_mutex_unlock(&philo->param
+			->philo[philo->param->nbr_philos - 1].check_forks);
+		print_event(philo->param, "he token a fork", philo->id_philo);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->param
+		->philo[philo->param->nbr_philos].check_forks);
+	return (0);
+}
+
+int	check_lfork(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->check_forks);
+	if (philo->fork == 1)
+	{
+		philo->fork = 0;
+		pthread_mutex_unlock(&philo->check_forks);
+		print_event(philo->param, "he token a fork", philo->id_philo);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->check_forks);
+	return (0);
 }
 
 int	check_die(t_philo *philo)
