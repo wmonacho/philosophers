@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 14:03:29 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/09/06 14:41:10 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/09/06 18:20:45 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	check_rfork(t_philo *philo)
 			philo->param->philo[philo->id_philo - 2].fork = 0;
 			pthread_mutex_unlock(&philo->param
 				->philo[philo->id_philo - 1].check_forks);
-			print_event(philo->param, "he token a fork", philo->id_philo);
+			print_event(philo->param, "has token a fork", philo->id_philo);
 			return (1);
 		}
 		pthread_mutex_unlock(&philo->param
@@ -86,7 +86,7 @@ int	check_lfork(t_philo *philo)
 	{
 		philo->fork = 0;
 		pthread_mutex_unlock(&philo->check_forks);
-		print_event(philo->param, "he token a fork", philo->id_philo);
+		print_event(philo->param, "has token a fork", philo->id_philo);
 		return (1);
 	}
 	pthread_mutex_unlock(&philo->check_forks);
