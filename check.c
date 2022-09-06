@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 14:03:29 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/09/05 18:43:53 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/09/06 14:41:10 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ int	check_rfork(t_philo *philo)
 	{
 		pthread_mutex_lock(&philo->param
 			->philo[philo->id_philo - 1].check_forks);
-		if (philo->param->philo[philo->id_philo - 1].fork == 1)
+		if (philo->param->philo[philo->id_philo - 2].fork == 1)
 		{
-			philo->param->philo[philo->id_philo - 1].fork = 0;
+			philo->param->philo[philo->id_philo - 2].fork = 0;
 			pthread_mutex_unlock(&philo->param
 				->philo[philo->id_philo - 1].check_forks);
 			print_event(philo->param, "he token a fork", philo->id_philo);
@@ -76,23 +76,6 @@ int	check_rfork(t_philo *philo)
 		if (check_rfork_first(philo) == 1)
 			return (1);
 	}
-	return (0);
-}
-
-int	check_rfork_first(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->param
-		->philo[philo->param->nbr_philos - 1].check_forks);
-	if (philo->param->philo[philo->param->nbr_philos - 1].fork == 1)
-	{
-		philo->param->philo[philo->param->nbr_philos - 1].fork = 0;
-		pthread_mutex_unlock(&philo->param
-			->philo[philo->param->nbr_philos - 1].check_forks);
-		print_event(philo->param, "he token a fork", philo->id_philo);
-		return (1);
-	}
-	pthread_mutex_unlock(&philo->param
-		->philo[philo->param->nbr_philos].check_forks);
 	return (0);
 }
 

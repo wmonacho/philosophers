@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 14:03:17 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/09/05 18:40:01 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/09/06 14:41:45 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,27 +50,22 @@ void	reset_fork(t_philo *philo)
 	if (philo->id_philo != 1)
 	{
 		pthread_mutex_lock(&philo->param
-			->philo[philo->param->nbr_philos].check_forks);
-		philo->param->philo[philo->id_philo].fork = 1;
+			->philo[philo->id_philo - 1].check_forks);
+		philo->param->philo[philo->id_philo - 2].fork = 1;
 		pthread_mutex_unlock(&philo->param
-			->philo[philo->param->nbr_philos].check_forks);
+			->philo[philo->id_philo - 1].check_forks);
 	}
 	else
 	{
 		pthread_mutex_lock(&philo->param
-			->philo[philo->param->nbr_philos].check_forks);
-		philo->param->philo[philo->param->nbr_philos].fork = 1;
+			->philo[philo->param->nbr_philos - 1].check_forks);
+		philo->param->philo[philo->param->nbr_philos - 1].fork = 1;
 		pthread_mutex_unlock(&philo->param
-			->philo[philo->param->nbr_philos].check_forks);
+			->philo[philo->param->nbr_philos - 1].check_forks);
 	}
 	pthread_mutex_lock(&philo->check_forks);
 	philo->fork = 1;
 	pthread_mutex_unlock(&philo->check_forks);
-}
-
-void	ft_think(t_philo *philo)
-{
-	print_event(philo->param, "is thinking", philo->id_philo);
 }
 
 void	ft_sleep(t_philo *philo)

@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 14:02:59 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/09/05 18:19:57 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/09/06 14:42:09 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void				ft_usleep(int time);
 void				*threadrout(void *arg);
 void				print_event(t_param *param, char *message, int id);
 void				reset_fork(t_philo *philo);
+void				ft_think(t_philo *philo);
 
 /*FREE*/
 int					exit_parse(t_param *param, char *str);
