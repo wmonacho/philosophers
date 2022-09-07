@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 14:03:17 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/09/06 14:41:45 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/09/07 18:01:58 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	ft_eat(t_philo	*philo)
 			return (0);
 		if (check_lfork(philo) == 1)
 			break ;
+		usleep(500);
 	}
 	while (1)
 	{
@@ -27,6 +28,7 @@ int	ft_eat(t_philo	*philo)
 			return (0);
 		if (check_rfork(philo) == 1)
 			break ;
+		usleep(500);
 	}
 	take_a_meal(philo);
 	return (1);
@@ -35,10 +37,10 @@ int	ft_eat(t_philo	*philo)
 void	take_a_meal(t_philo *philo)
 {
 	print_event(philo->param, "is eating", philo->id_philo);
-	ft_usleep(philo->param->time_to_eat);
 	pthread_mutex_lock(&philo->check_last_eat);
 	philo->time_last_eat = gettime();
 	pthread_mutex_unlock(&philo->check_last_eat);
+	ft_usleep(philo->param->time_to_eat);
 	pthread_mutex_lock(&philo->check_meal);
 	philo->meal++;
 	pthread_mutex_unlock(&philo->check_meal);
