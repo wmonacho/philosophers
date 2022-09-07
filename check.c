@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 14:03:29 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/09/07 12:08:35 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/09/07 17:17:42 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ int	check_last_eat(t_param *param, int i)
 	if (check_diff(param->philo[i].time_last_eat) > param->time_to_die)
 	{
 		print_event(param, "died", param->philo[i].id_philo);
+		pthread_mutex_lock(&param->print_message);
+			param->dieded = 1;
+		pthread_mutex_unlock(&param->print_message);
 		return (0);
 	}
 	pthread_mutex_lock(&param->philo->check_meal);
