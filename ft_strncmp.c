@@ -1,41 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/14 20:33:32 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/09/07 13:01:49 by wmonacho         ###   ########lyon.fr   */
+/*   Created: 2021/07/11 16:18:42 by wmonacho          #+#    #+#             */
+/*   Updated: 2022/09/07 12:11:18 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-unsigned long long	ft_atoi(const char *str)
+int	ft_strncmp(const char *s1, const char *s2, unsigned int n)
 {
-	unsigned long long	nb;
-	int					i;
-	int					minus;
+	unsigned int	i;
 
 	i = 0;
-	nb = 0;
-	minus = 1;
-	while (str[i] == '\t' || str[i] == '\v' || str[i] == '\n'
-		|| str[i] == '\r' || str[i] == ' ' || str[i] == '\f')
+	if (n == 0)
+		return (0);
+	while (s1[i] && s2[i] && s1[i] == s2[i] && n - 1 > i)
 		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			minus = -minus;
-		i++;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		nb = nb * 10;
-		nb = nb + str[i] - '0';
-		i++;
-	}
-	nb = nb * minus;
-	return (nb);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

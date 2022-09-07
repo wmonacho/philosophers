@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 14:02:59 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/09/06 14:42:09 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/09/07 13:00:52 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,19 @@ typedef struct s_param
 {
 	int					nbr_philos;
 	int					dieded;
-	int					time_to_die;
+	unsigned long long	time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;
 	int					all_ate;
 	int					nbr_of_meal;
 	unsigned long long	time;
 	unsigned long long	start_time;
-	pthread_mutex_t		mutex_check;
-	pthread_mutex_t		check_die;
 	pthread_mutex_t		print_message;
 	t_philo				*philo;
 }				t_param;
 
 /*UTILS*/
-int					ft_atoi(const char *str);
+unsigned long long	ft_atoi(const char *str);
 void				ft_putstr_fd(char *s, int fd);
 
 /*PARSING*/
@@ -71,7 +69,7 @@ unsigned long long	gettime(void);
 /*ROUTINE*/
 int					ft_eat(t_philo	*philo);
 void				take_a_meal(t_philo *philo);
-void				ft_usleep(int time);
+void				ft_usleep(unsigned long long time);
 void				*threadrout(void *arg);
 void				print_event(t_param *param, char *message, int id);
 void				reset_fork(t_philo *philo);
@@ -91,7 +89,7 @@ int					check_if_philo_dieded(t_param *param);
 int					check_last_eat(t_param *param, int i);
 int					check_rfork(t_philo *philo);
 int					check_lfork(t_philo *philo);
-int					check_diff(unsigned long long last_eat);
+unsigned long long	check_diff(unsigned long long last_eat);
 int					exit_destroy_meal(t_param *param, char *str, int i);
 int					exit_destroy_last_eat(t_param *param, char *str, int i);
 int					exit_destroy_forks(t_param *param, char *str, int i);

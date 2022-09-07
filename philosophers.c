@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 14:03:13 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/09/05 17:59:37 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/09/07 12:04:15 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ int	join_and_destroy_thread(t_param *param)
 		destroy_mutex(param, &param->philo[i].check_meal);
 		destroy_mutex(param, &param->philo[i].check_forks);
 	}
-	destroy_mutex(param, &param->check_die);
-	destroy_mutex(param, &param->mutex_check);
 	destroy_mutex(param, &param->print_message);
 	return (1);
 }

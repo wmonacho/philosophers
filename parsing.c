@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 14:03:33 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/09/05 18:41:21 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/09/07 12:08:36 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,7 @@ int	philo_init(t_param *param, int i)
 
 int	init_mutex(t_param *param)
 {
-	pthread_mutex_init(&param->check_die, NULL);
-	pthread_mutex_init(&param->mutex_check, NULL);
+	pthread_mutex_init(&param->print_message, NULL);
 	pthread_mutex_init(&param->print_message, NULL);
 	return (1);
 }

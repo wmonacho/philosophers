@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 14:03:29 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/09/06 18:20:45 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/09/07 12:08:35 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	check_if_philo_dieded(t_param *param)
 		}
 		if (param->all_ate == 1)
 		{
-			pthread_mutex_lock(&param->check_die);
+			pthread_mutex_lock(&param->print_message);
 			param->dieded = 1;
-			pthread_mutex_unlock(&param->check_die);
+			pthread_mutex_unlock(&param->print_message);
 			return (0);
 		}
 		usleep(500);
@@ -42,9 +42,6 @@ int	check_last_eat(t_param *param, int i)
 	if (check_diff(param->philo[i].time_last_eat) > param->time_to_die)
 	{
 		print_event(param, "died", param->philo[i].id_philo);
-		pthread_mutex_lock(&param->check_die);
-		param->dieded = 1;
-		pthread_mutex_unlock(&param->check_die);
 		return (0);
 	}
 	pthread_mutex_lock(&param->philo->check_meal);
@@ -95,12 +92,12 @@ int	check_lfork(t_philo *philo)
 
 int	check_die(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->param->check_die);
+	pthread_mutex_lock(&philo->param->print_message);
 	if (philo->param->dieded == 1)
 	{
-		pthread_mutex_unlock(&philo->param->check_die);
+		pthread_mutex_unlock(&philo->param->print_message);
 		return (0);
 	}
-	pthread_mutex_unlock(&philo->param->check_die);
+	pthread_mutex_unlock(&philo->param->print_message);
 	return (1);
 }
